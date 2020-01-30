@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 router.post("/signup", (req, res) => {
   const { username, password } = req.body;
@@ -28,10 +29,11 @@ router.post("/signup", (req, res) => {
           return User.create({ username: username, password: hash });
         })
         .then(newUser => {
+          console.log("NewUSER", newUser);
           // passport login
           req.login(newUser, err => {
             if (err) res.status(500).json(err);
-            else res.json(newUser);
+            res.json(newUser);
           });
         });
     })
@@ -40,10 +42,10 @@ router.post("/signup", (req, res) => {
     });
 });
 
-const passport = require("passport");
-
 router.post("/login", (req, res, next) => {
+  console.log("ENTROU");
   passport.authenticate("local", (err, user) => {
+    
     if (err) {
       return res.status(500).json({ message: "Error while authenticating" });
     }
@@ -55,14 +57,14 @@ router.post("/login", (req, res, next) => {
     req.login(user, err => {
       if (err) res.status(500).json(err);
       res.json(user);
-    })(req, res, next);
-  });
+    });
+  })(req, res, next);
 });
 
 router.delete("/logout", (req, res) => {
   //passport logout function
   req.logout();
-  res.json({ message: "Successful login" });
+  res.json({ message: "Successful logout" });
 });
 
 router.get("/loggedin", (req, res) => {

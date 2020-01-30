@@ -3,6 +3,20 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
+passport.serializeUser((loggedInUser, cb) => {
+  cb(null, loggedInUser._id);
+});
+
+passport.deserializeUser((userIdFromSession, cb) => {
+  User.findById(userIdFromSession, (err, userDocument) => {
+    if (err) {
+      cb(err);
+      return;
+    }
+    cb(null, userDocument);
+  });
+});
+
 passport.use(
   new LocalStrategy(
     {

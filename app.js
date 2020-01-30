@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const bodyParser = require("body-parser");
-//const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const express = require("express");
 //const favicon = require("serve-favicon");
 const mongoose = require("mongoose");
@@ -36,7 +36,7 @@ const app = express();
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(cookieParser())
+app.use(cookieParser())
 
 app.locals.title = "Travel Portal";
 
@@ -49,8 +49,11 @@ app.use(
   })
 );
 
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(flash());
-require("./passport")(app);
+require("./configs/passport");
 
 //routes
 const authRoutes = require("./routes/auth")
