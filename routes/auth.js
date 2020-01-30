@@ -43,7 +43,6 @@ router.post("/signup", (req, res) => {
 });
 
 router.post("/login", (req, res, next) => {
-  console.log("ENTROU");
   passport.authenticate("local", (err, user) => {
     
     if (err) {

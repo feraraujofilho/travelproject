@@ -59,4 +59,7 @@ require("./configs/passport");
 const authRoutes = require("./routes/auth")
 app.use("/api/auth", authRoutes)
 
+const Users = require("./routes/profile")
+app.use("/api/profile", Users)
+
 module.exports = app
