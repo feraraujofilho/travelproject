@@ -1,10 +1,7 @@
-import React, { Component } from "react";
-import Logo from "../img/Logo-Test.png";
 import styled from "styled-components";
-import { fontFamily, fontSize, btnRed } from "./Styles";
-import { Link } from "react-router-dom"
+import { fontFamily, fontSize, btnRed } from "../Styles";
 
-const Container = styled.div`
+export const Container = styled.div`
   font-size: ${fontSize};
 
   .navbar {
@@ -40,20 +37,3 @@ const Container = styled.div`
     }
   }
 `;
-
-export default class Navbar extends Component {
-  render() {
-    return (
-      <Container>
-        <div className="navbar">
-          <img src={Logo} alt="logo" />
-          <ul>
-            <Link to="/">Home</Link>
-            <Link to="/search">Search</Link>
-            <Link to="/contact">Contact</Link>
-          </ul>
-        </div>
-      </Container>
-    );
-  }
-}
