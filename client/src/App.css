@@ -1,3 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "'Poppins', 'Helvetica', 'Arial', 'sans-serif'";
+  font-size: 16px;
+}
+
 .App {
   text-align: center;
 }
@@ -23,16 +33,8 @@ img.pokemon-image {
   margin-bottom: 10px
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-}
 
-.navbar ul {
-  display: flex;
-  text-decoration: none;
-  list-style: none;
-}
+
 
 
 
