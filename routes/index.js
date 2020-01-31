@@ -13,23 +13,39 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/api/flights", async (req, res) => {
-  const {cityFrom, cityTo, departureDate} = req.query
+  console.log(req.query);
+  const { cityFrom, cityTo, departureDate } = req.query;
   // API call with params we requested from client app
-  const response = await amadeus.shopping.flightOffers
-    .get({
-      origin: "MAD",
-      destination: "PAR",
-      departureDate: "2020-08-01"
-    })
-    try {
-      console.log(res)
-      await res.json(JSON.parse(response.body));
-      console.log("DEPOOOOOOOOIS", response.body)
-    }catch (err ){
-      await res.json(err)
-    }
+  const response = await amadeus.shopping.flightOffers.get({
+    origin: cityFrom,
+    destination: cityTo,
+    departureDate: departureDate,
+    nonStop: true
+  });
 
-    /* .then(res => {
+  let fares = JSON.parse(response.body).data.map(val => {
+    let cleanData = val.offerItems[0].services[0].segments[0].flightSegment;
+    let filtro = {
+      departureCity: cleanData.departure.iataCode,
+      destinationCity: cleanData.arrival.iataCode,
+      departureDate: cleanData.departure.at.slice(0, 10),
+      departureTime: cleanData.departure.at.slice(11, 16),
+      price: val.offerItems[0].price.total,
+      carrier: cleanData.carrierCode
+    };
+    return filtro;
+  })
+  
+  let sorted = fares.sort((a,b) => Number(a.price) - Number(b.price) );
+
+  try {
+    await res.json(sorted);
+    console.log(sorted);
+  } catch (err) {
+    await res.json(err);
+  }
+
+  /* .then(res => {
       console.log(res.data);
       await res.json(res.data);
     })

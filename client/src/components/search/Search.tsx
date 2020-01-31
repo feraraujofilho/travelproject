@@ -23,13 +23,11 @@ class Search extends Component {
   };
 
   handleSubmit = event => {
-    event.preventDefault();
-    console.log("HAE")
+    event.preventDefault()
+    console.log(event)
     const {cityFrom, cityTo, departureDate, returnDate} = this.state
     axios
-      .get(
-        `https://api.skypicker.com/flights?flyFrom=PRG&to=LGW&dateFrom=18/11/2020&dateTo=12/12/2020&partner=picky&v=3`
-      )
+      .get(`http://localhost:5001/api/flights/?cityFrom=${cityFrom}&cityTo=${cityTo}&departureDate=${departureDate}`)
       .then(res => {
         console.log(res);
       })
@@ -50,39 +48,39 @@ class Search extends Component {
         </p>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <label htmlFor="flyFrom">From</label>
+            <label htmlFor="cityFrom">From</label>
             <input
               onChange={this.handleChange}
               type="text"
-              name="flyFrom"
-              id="flyFrom"
+              name="cityFrom"
+              id="cityFrom"
             />
           </div>
           <div>
-            <label htmlFor="flyTo">To</label>
+            <label htmlFor="cityTo">To</label>
             <input
               onChange={this.handleChange}
               type="text"
-              name="flyTo"
-              id="flyTo"
+              name="cityTo"
+              id="cityTo"
             />
           </div>
           <div>
-            <label htmlFor="dateFrom">Departure Date</label>
+            <label htmlFor="departureDate">Departure Date</label>
             <input
               onChange={this.handleChange}
               type="date"
-              name="dateFrom"
-              id="dateFrom"
+              name="departureDate"
+              id="departureDate"
             />
           </div>
           <div>
-            <label htmlFor="returnFrom">Return Date</label>
+            <label htmlFor="returnDate">Return Date</label>
             <input
               onChange={this.handleChange}
               type="date"
-              name="return From"
-              id="returnFrom"
+              name="returnDate"
+              id="returnDate"
             />
           </div>
           <button type="submit">Search</button>
