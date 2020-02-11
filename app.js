@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const cors = require('cors')
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -32,6 +33,11 @@ const debug = require("debug")(
 
 const app = express();
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}))
+
 //Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -62,7 +68,10 @@ app.use("/api/auth", authRoutes)
 const Users = require("./routes/profile")
 app.use("/api/profile", Users)
 
-const index = require("./routes/index");
-app.use("/", index);
+const amadeus = require("./routes/amadeus");
+app.use("/", amadeus);
+
+const cities = require("./routes/cities")
+app.use("/api/cities", cities)
 
 module.exports = app

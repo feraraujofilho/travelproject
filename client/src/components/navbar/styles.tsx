@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { fontFamily, fontSize, btnRed } from "../Styles";
+import { fontSize, btnRed } from "../Styles";
 
 export const Container = styled.div`
   font-size: ${fontSize};

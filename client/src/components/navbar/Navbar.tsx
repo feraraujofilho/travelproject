@@ -8,7 +8,7 @@ export default class Navbar extends Component {
     return (
       <Container>
         <div className="navbar">
-          <img src={Logo} alt="logo" />
+          <Link to="/"><img src={Logo} alt="logo" /></Link>
           <ul>
             <Link to="/">Home</Link>
             <Link to="/search">Search</Link>
